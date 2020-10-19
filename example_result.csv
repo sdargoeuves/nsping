@@ -1,0 +1,7 @@
+ID;Source;IP;Hostname;Ping
+1;8.8.8.8;8.8.8.8;dns.google;True
+2;8.8.4.4;8.8.4.4;dns.google;True
+3;8.8.4.5;8.8.4.5;NSLOOKUP_FAILED;False
+4;amazon.com;205.251.242.103;amazon.com;True
+5;amaron.de;185.53.178.53;amaron.de;False
+6;amaron.com;72.143.24.146;amaron.com;False
