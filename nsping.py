@@ -1,11 +1,11 @@
 import os
-import ipaddress
 import sys
-import socket
-import csv          # "old" way to export to csv
-import pandas as pd # easier way to export to csv
 import platform     # For getting the operating system name
 import subprocess   # For executing a shell command
+import socket
+import ipaddress
+#import csv          # "old" way to export to csv
+import pandas as pd # easier way to export to csv
 
 
 def nsping():
