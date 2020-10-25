@@ -23,11 +23,11 @@ The output is a CSV file, containing the following columns and separated by ";":
 ID;Source;IP;Name;Ping
 ```
 Where:
-- ID: line position, based frmo source file
+- ID: line position, based from source file
 - Source: the entry as it was in the source file
 - IP: the IP address, either found by nslookup based on the source (hostname) if hostname was provided, otherwise, IP address is equal to Source
 - Hostname: hostname, either found by nslookup based on the source (IP) if IP was provided, otherwise, Name is equal to Source
-- Ping: this bolean will return True, False, or NOT ATTEMPTED if we do not have an IP address after the nslookup.
+- Ping: this bolean will return True, False, or NOT ATTEMPTED if we can't find the IP address of an host using nslookup, or if the IP address is not valid
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
