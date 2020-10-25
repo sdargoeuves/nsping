@@ -4,7 +4,7 @@ import platform     # For getting the operating system name
 import subprocess   # For executing a shell command
 import socket
 import ipaddress
-#import csv          # "old" way to export to csv
+#import csv          # other way to export to csv
 import pandas as pd # easier way to export to csv
 
 
@@ -42,17 +42,17 @@ def nsping():
             result_ping = ping(ip)
         else:
             result_ping = "NOT_ATTEMPTED"
-        #result.append(dict(Source = src_entry, IP = ip, Hostname = hostname, Ping = result_ping))
+        #result.append(dict(ID = id, Source = src_entry, IP = ip, Hostname = hostname, Ping = result_ping))
         result.append(dict(zip(key_names, [id, src_entry, ip, hostname, result_ping])))
     
     #using pandas to export to CSV
     df = pd.DataFrame(result)
     date = pd.Timestamp('today').strftime("%Y%m%d") + "-" + pd.Timestamp('now').strftime("%H%M")
-    output_file = "".join([date,"-output-",input_file[:-3],"csv"])
+    output_file = "".join(["output-", os.path.splitext(input_file)[0], "-", date, ".csv"])
     
     df.to_csv(output_file, sep=";", index=False)
     
-    #using old way of CSV export
+    #other way of creating CSV export
     #keys = result[0].keys()
     #print(keys)
     #with open(str("output-old-"+input_file), "w", newline="")  as output_file:
