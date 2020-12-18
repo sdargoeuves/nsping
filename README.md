@@ -1,5 +1,3 @@
-[update Dec 2020]
-
 # nsping
 Nslookup and Ping on multiple entries
 
