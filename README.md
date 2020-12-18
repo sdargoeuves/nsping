@@ -1,3 +1,5 @@
+[update Dec 2020]
+
 # nsping
 Nslookup and Ping on multiple entries
 
@@ -35,3 +37,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
