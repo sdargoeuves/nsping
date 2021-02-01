@@ -1,5 +1,5 @@
 """
-Welcome to this code
+Welcome to NSPING.py
 """
 
 import os
@@ -9,20 +9,21 @@ import subprocess   # For executing a shell command
 import socket
 import ipaddress
 #import csv          # other way to export to csv
+import argparse
 import pandas as pd # easier way to export to csv
+
 
 def nsping():
     """
     Main function for nsping
     """
-    #Check that we have input_file as argument
-    if len(sys.argv) >= 2:
-        input_file = sys.argv[1]
-    else:
-        err_msg = ("##ERR## You need to specify the source file as an argument:\n"
-            "python3 nsping.py input_file")
-        sys.exit(err_msg)
-    
+    #Check that we have input_file as argument, using argparse
+    parser = argparse.ArgumentParser(description=
+            "NSPING needs a source file as an argument")
+    parser.add_argument("input_file", help="Source File",type=str)
+    args = parser.parse_args()
+    input_file = args.input_file
+
     #define variables
     src_list = []
     result = []
@@ -36,7 +37,7 @@ def nsping():
             if line != "":
                 src_list.append(line)
     else:
-        err_msg = "##ERR## Input file '%(input_file)' does not exist"
+        err_msg = f'##ERR## Input file \'{input_file}\' does not exist'
         sys.exit(err_msg)
     
     #loop through each entry
@@ -51,12 +52,6 @@ def nsping():
             result_ping = ping(ip)
         else:
             result_ping = "NOT_ATTEMPTED"
-        #result.append(dict(ID = id_ref,
-        #   Source = src_entry,
-        #   IP = ip,
-        #   Hostname = hostname,
-        #   Ping = result_ping,
-        #   ))
         result.append(dict(zip(key_names, [
             id_ref,
             src_entry,
@@ -68,7 +63,7 @@ def nsping():
     df = pd.DataFrame(result)
     date = pd.Timestamp('today').strftime("%Y%m%d") + "-" + pd.Timestamp('now').strftime("%H%M")
     output_file = "".join(["output-", os.path.splitext(input_file)[0], "-", date, ".csv"])
-    df.to_csv(output_file, sep=";", index=False)
+    df.to_csv(output_file, sep=";", index=False)   
     
     #other way of creating CSV export
     #keys = result[0].keys()
@@ -78,7 +73,6 @@ def nsping():
     #    dict_writer.writeheader()
     #    dict_writer.writerows(result)
 
-            
 def ping(host):
     """
     Returns True if host (str) responds to a ping request.
@@ -99,7 +93,6 @@ def nslookup(src_entry):
     - Alias list for the IP address if any
     - IP address of the host
     """
-    
     try:
         # the src_entry is an IP address
         ip = str(ipaddress.ip_address(src_entry))
