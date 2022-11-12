@@ -28,37 +28,29 @@ def nsping():
     src_list = []
     result = []
     key_names = ["ID", "Source", "IP", "Hostname", "Ping"]
-    
+
     #Confirm the file exists, and add the values in src_list
     if os.path.isfile(input_file):
         with open(input_file, 'r') as file:
             input_read = file.read()
-        for line in input_read.split("\n"):
-            if line != "":
-                src_list.append(line)
+        src_list.extend(line for line in input_read.split("\n") if line != "")
     else:
         err_msg = f'##ERR## Input file \'{input_file}\' does not exist'
         sys.exit(err_msg)
-    
-    #loop through each entry
-    id_ref = 0
-    for src_entry in src_list:
-        id_ref += 1
+
+    for id_ref, src_entry in enumerate(src_list, start=1):
         output_nslookup = nslookup(src_entry)
         ip = output_nslookup[0]
         hostname = output_nslookup[1]
 
-        if ip != "NSLOOKUP_FAILED":
-            result_ping = ping(ip)
-        else:
-            result_ping = "NOT_ATTEMPTED"
+        result_ping = ping(ip) if ip != "NSLOOKUP_FAILED" else "NOT_ATTEMPTED"
         result.append(dict(zip(key_names, [
             id_ref,
             src_entry,
             ip,
             hostname,
             result_ping,])))
-    
+
     #using pandas to export to CSV
     df = pd.DataFrame(result)
     date = pd.Timestamp('today').strftime("%Y%m%d") + "-" + pd.Timestamp('now').strftime("%H%M")
